@@ -1,0 +1,65 @@
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 属性定义 
+		加载一个properties文件，在properties标签 中配置属性值
+	-->
+	<properties resource="db.properties">
+		<!-- <property name="" value=""/> -->
+	</properties>
+	
+	<!-- 定义  别名 -->
+	<typeAliases>
+		<!-- 单个别名的定义 
+		 alias:别名 ， type:别名映射的类型
+		 -->
+		<typeAlias type="cn.itcast.mybatis.po.User" alias="user"/>
+		
+		<!-- 批量别名定义 
+			指定包路径，自动扫描包下的pojo，定义别名，别名默认为类名(首字母小写或大写)
+		-->
+		<package name="cn.itcast.mybatis.po"/>
+		
+	</typeAliases>
+	
+	<!-- 和spring整合后environment配置将废除 -->	
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理 -->
+			<transactionManager type="JDBC"/>
+			<!-- 数据库连接池 -->
+			<dataSource type="POOLED">
+				<!-- 驱动 -->
+				<property name="driver" value="${jdbc.driver}"/>
+				<!-- 连接数据库的url -->
+				<property name="url" value="${jdbc.url}"/>
+				<!-- 数据库用户名 -->
+				<property name="username" value="${jdbc.username}"/>
+				<!-- 数据库密码 -->
+				<property name="password" value="${jdbc.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 加载mapper.xml -->
+	<mappers>
+		<!--通过resource引用单个mapper的映射文件  -->
+		<!-- <mapper resource="mapper/UserMapper.xml"/>  -->
+		
+		<!-- 通过class引用mapper接口
+			class：配置maper接口权限定名
+			要求：需要mapper.xml和mapper.java同名并且在一个目录中
+		<mapper class="cn.itcast.mybatis.mapper.UserMapper"/>
+		 -->
+		
+		<!-- 批量mapper配置
+			通过pachage进行自动扫描包下面的mapper接口，
+			要求：需要mapper.xml和mapper.java同名并且在一个目录下
+		 -->
+		 <package name="cn.itcast.mybatis.mapper"/>
+		
+	</mappers>
+	
+</configuration>
